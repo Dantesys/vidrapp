@@ -3,18 +3,10 @@ import { StyleSheet, View, Text, TouchableOpacityBase, TouchableOpacity, SafeAre
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-const Drawer = createDrawerNavigator();
+//TELAS
+import HomeScreen from './screen/index'
 const Stack = createNativeStackNavigator();
-const HomeScreen = ({route,navigation}) => {
-  const [func,setFunc] = React.useState(null)
-  return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.container2}>
-        <Text style={{fontSize:20}}>HOME</Text>
-      </View>
-    </SafeAreaView>
-  )
-}
+const Drawer = createDrawerNavigator();
 const ProfileScreen = ({navigation}) => {
   const func = [
     {nome:'Teste',desc:'Um teste'},
@@ -29,54 +21,39 @@ const ProfileScreen = ({navigation}) => {
         <TouchableOpacity
           style={styles.btn}
           key={key}
-          onPress={()=>{navigation.navigate('Detalhes',{func:item})}}
+          onPress={()=>{navigation.navigate('Home',{func:item})}}
         ><Text style={{fontSize:20}}>{item.nome}</Text>
         </TouchableOpacity>
       ))}
     </View>
   )
 }
-const DetailScreen = ({route,navigation}) => {
-  const func = route.params.func;
+const RoomScreen = ({navigation}) => {
+  const func = [
+    {num:'01',desc:'Diretoria'},
+    {num:'02',desc:'Deposito'},
+    {num:'03',desc:'Servidor'},
+    {num:'04',desc:'Dormitorio'},
+    {num:'05',desc:'Lanchonete'},
+  ]
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.container2}>
-        <Text style={{fontSize:20}}>{func.nome}</Text>
-        <Text style={{fontSize:18}}>Descrição</Text>
-        <Text style={{fontSize:16,textAlign: 'justify'}}>{func.desc}</Text>
-      </View>
-    </SafeAreaView>
-  )
-}
-const profileStack = () => {
-  return (
-    <Stack.Navigator>
-        <Stack.Screen
-          name="Lista de Funcionarios"
-          component={ProfileScreen}
-          options={{headerShown:false}}
-        />
-        <Stack.Screen
-          name="Detalhes"
-          component={DetailScreen}
-        />
-    </Stack.Navigator>
+    <View>
+      {func.map((item,key)=>(
+        <Text key={key} style={{fontSize:20}}>Sala {item.num} - {item.desc}</Text>
+      ))}
+    </View>
   )
 }
 export default function App() {
   return (
     <NavigationContainer>
-      <Drawer.Navigator>
-        <Drawer.Screen 
+      <Stack.Navigator>
+        <Stack.Screen 
           name="Home"
           component={HomeScreen}
+          options={{headerShown:false}}
         />
-        <Drawer.Screen 
-          name="Funcionarios"
-          component={profileStack}
-        />
-      </Drawer.Navigator>
-      
+      </Stack.Navigator>
     </NavigationContainer>
   );
 }
