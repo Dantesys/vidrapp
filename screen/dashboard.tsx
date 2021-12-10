@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacityBase, TouchableOpacity, SafeAreaView } from 'react-native';
-export default function HomeScreen({navigation}){
+export default function DashboardScreen({navigation}){
     return (
     <SafeAreaView style={styles.container}>
         <View style={styles.container2}>

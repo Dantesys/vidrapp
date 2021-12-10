@@ -1,12 +1,40 @@
 import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacityBase, TouchableOpacity, SafeAreaView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { createDrawerNavigator } from '@react-navigation/drawer';
+import { createDrawerNavigator, DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 //TELAS
-import HomeScreen from './screen/index'
+import HomeScreen from './screen/index';
+import LoginScreen from './screen/login';
+import CadastroScreen from './screen/cadastro';
+import DashboardScreen from './screen/dashboard';
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
+function backbtn(props){
+  return(
+    <DrawerContentScrollView>
+      <DrawerItem
+        label="Sair"
+        onPress={()=>{props.navigation.navigate("Home")}}
+      />
+    </DrawerContentScrollView>
+  )
+}
+function DashBoard(){
+  return(
+    <Drawer.Navigator
+      drawerContent={(props) => <backbtn {...props}/>}
+    >
+      <Drawer.Screen
+        name="Inicio"
+        component={DashboardScreen}
+        options={{
+          headerShown:true,
+        }}
+      />
+    </Drawer.Navigator>
+  )
+}
 const ProfileScreen = ({navigation}) => {
   const func = [
     {nome:'Teste',desc:'Um teste'},
@@ -52,6 +80,36 @@ export default function App() {
           name="Home"
           component={HomeScreen}
           options={{headerShown:false}}
+        />
+        <Stack.Screen 
+          name="Login"
+          component={LoginScreen}
+          options={{
+            headerShown:true,
+            title:"VIDRAPP LOGO",
+            headerTitleAlign:'center',
+            headerTitleStyle:{fontSize:25},
+            headerShadowVisible: false,
+            headerStyle:{backgroundColor: '#E1EAF4'}
+          }}
+        />
+        <Stack.Screen 
+          name="Cadastro"
+          component={CadastroScreen}
+          options={{
+            headerShown:true,
+            title:"VIDRAPP LOGO",
+            headerTitleAlign:'center',
+            headerTitleStyle:{fontSize:25},
+            headerShadowVisible: false,
+            headerStyle:{backgroundColor: '#E1EAF4'}}}
+        />
+        <Stack.Screen 
+          name="Dashboard"
+          component={DashBoard}
+          options={{
+            headerShown:false,
+          }}
         />
       </Stack.Navigator>
     </NavigationContainer>
