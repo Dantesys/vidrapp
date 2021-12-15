@@ -1,8 +1,9 @@
 import React from 'react';
-import { StyleSheet, View, Text, TouchableOpacityBase, TouchableOpacity, SafeAreaView } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacityBase, TouchableOpacity, SafeAreaView, Platform, StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { Icon } from 'react-native-elements'
 //TELAS
 import HomeScreen from './screen/index';
 import LoginScreen from './screen/login';
@@ -10,26 +11,27 @@ import CadastroScreen from './screen/cadastro';
 import DashboardScreen from './screen/dashboard';
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
-function backbtn(props){
-  return(
-    <DrawerContentScrollView>
-      <DrawerItem
-        label="Sair"
-        onPress={()=>{props.navigation.navigate("Home")}}
-      />
-    </DrawerContentScrollView>
-  )
-}
 function DashBoard(){
   return(
     <Drawer.Navigator
-      drawerContent={(props) => <backbtn {...props}/>}
+      drawerContent={(props) => <DrawerItem
+          label="Sair"
+          labelStyle={{color:"#fff",fontSize:15}}
+          inactiveBackgroundColor="#00d0f0"
+          onPress={()=>{props.navigation.navigate("Home")}}
+        />}
+      screenOptions={{
+          drawerStyle: {
+            backgroundColor: "#000",
+          }
+        }}
     >
       <Drawer.Screen
         name="Inicio"
         component={DashboardScreen}
         options={{
           headerShown:true,
+          headerStyle:{backgroundColor: '#E1EAF4'}
         }}
       />
     </Drawer.Navigator>
@@ -74,45 +76,47 @@ const RoomScreen = ({navigation}) => {
 }
 export default function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen 
-          name="Home"
-          component={HomeScreen}
-          options={{headerShown:false}}
-        />
-        <Stack.Screen 
-          name="Login"
-          component={LoginScreen}
-          options={{
-            headerShown:true,
-            title:"VIDRAPP LOGO",
-            headerTitleAlign:'center',
-            headerTitleStyle:{fontSize:25},
-            headerShadowVisible: false,
-            headerStyle:{backgroundColor: '#E1EAF4'}
-          }}
-        />
-        <Stack.Screen 
-          name="Cadastro"
-          component={CadastroScreen}
-          options={{
-            headerShown:true,
-            title:"VIDRAPP LOGO",
-            headerTitleAlign:'center',
-            headerTitleStyle:{fontSize:25},
-            headerShadowVisible: false,
-            headerStyle:{backgroundColor: '#E1EAF4'}}}
-        />
-        <Stack.Screen 
-          name="Dashboard"
-          component={DashBoard}
-          options={{
-            headerShown:false,
-          }}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <SafeAreaView style={{flex:1,paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0}}>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen 
+            name="Home"
+            component={HomeScreen}
+            options={{headerShown:false}}
+          />
+          <Stack.Screen 
+            name="Login"
+            component={LoginScreen}
+            options={{
+              headerShown:true,
+              title:"VIDRAPP LOGO",
+              headerTitleAlign:'center',
+              headerTitleStyle:{fontSize:25},
+              headerShadowVisible: false,
+              headerStyle:{backgroundColor: '#E1EAF4'}
+            }}
+          />
+          <Stack.Screen 
+            name="Cadastro"
+            component={CadastroScreen}
+            options={{
+              headerShown:true,
+              title:"VIDRAPP LOGO",
+              headerTitleAlign:'center',
+              headerTitleStyle:{fontSize:25},
+              headerShadowVisible: false,
+              headerStyle:{backgroundColor: '#E1EAF4'}}}
+          />
+          <Stack.Screen 
+            name="Dashboard"
+            component={DashBoard}
+            options={{
+              headerShown:false,
+            }}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </SafeAreaView>
   );
 }
 

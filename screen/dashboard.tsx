@@ -1,34 +1,124 @@
 import React from 'react';
-import { StyleSheet, View, Text, TouchableOpacityBase, TouchableOpacity, SafeAreaView } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacityBase, TouchableOpacity, SafeAreaView, ScrollView } from 'react-native';
+import { Card } from 'react-native-elements';
 export default function DashboardScreen({navigation}){
     return (
     <SafeAreaView style={styles.container}>
-        <View style={styles.container2}>
-            <Text style={{fontSize:50}}>VIDRAPP LOGO</Text>
-            <TouchableOpacity style={styles.btn} onPress={()=>{navigation.navigate('Login')}}>
-                <Text style={styles.btn_text}>LOGIN</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.btn} onPress={()=>{navigation.navigate('Cadastro')}}>
-                <Text style={styles.btn_text}>CADASTRO</Text>
-            </TouchableOpacity>
-        </View>
+        <ScrollView style={styles.scview}>
+            <View style={[styles.container2,{width:'100%',borderBottomWidth:2,borderBottomColor:'#fff'}]}>
+                <Text style={{color:'#fff',fontSize:30}}>AVISOS</Text>
+            </View>
+            <View style={styles.cards}>
+                <TouchableOpacity style={{minWidth: '50%', maxWidth: '50%'}}>
+                    <Card containerStyle={styles.card}>
+                        <Card.Title style={styles.card_title}>AVISO</Card.Title>
+                        <Card.Divider style={styles.card_line}/>
+                        <Text style={styles.card_text}>Isso é um aviso</Text>
+                    </Card>
+                </TouchableOpacity>
+                <TouchableOpacity style={{minWidth: '50%', maxWidth: '50%'}}>
+                    <Card containerStyle={styles.card}>
+                        <Card.Title style={styles.card_title}>AVISO</Card.Title>
+                        <Card.Divider style={styles.card_line}/>
+                        <Text style={styles.card_text}>Isso é um aviso</Text>
+                    </Card>
+                </TouchableOpacity>
+                <TouchableOpacity style={{minWidth: '50%', maxWidth: '50%'}}>
+                    <Card containerStyle={styles.card}>
+                        <Card.Title style={styles.card_title}>AVISO</Card.Title>
+                        <Card.Divider style={styles.card_line}/>
+                        <Text style={styles.card_text}>Isso é um aviso</Text>
+                    </Card>
+                </TouchableOpacity>
+                <TouchableOpacity style={{minWidth: '50%', maxWidth: '50%'}}>
+                    <Card containerStyle={styles.card}>
+                        <Card.Title style={styles.card_title}>AVISO</Card.Title>
+                        <Card.Divider style={styles.card_line}/>
+                        <Text style={styles.card_text}>Isso é um aviso</Text>
+                    </Card>
+                </TouchableOpacity>
+            </View>
+            <View style={[styles.container2,{width:'100%',borderBottomWidth:2,borderBottomColor:'#fff'}]}>
+                <Text style={{color:'#fff',fontSize:30}}>PEDIDOS A CAMINHO</Text>
+            </View>
+            <View style={styles.cardsPD}>
+                <TouchableOpacity style={{minWidth: '100%', maxWidth: '100%'}}>
+                    <Card containerStyle={styles.cardPD}>
+                        <Card.Title style={styles.card_title}>PEDIDO Nº 43025</Card.Title>
+                        <Card.Divider style={styles.card_line}/>
+                        <Card.FeaturedSubtitle style={{color:"#fff",fontSize:16.25}}>Descrição</Card.FeaturedSubtitle>
+                        <Text style={styles.card_text} numberOfLines={1}>Descrição do pedido 43025, fjodsa bfgjhk ghgh hkgh ghjg hjk</Text>
+                    </Card>
+                </TouchableOpacity>
+                <TouchableOpacity style={{minWidth: '100%', maxWidth: '100%'}}>
+                    <Card containerStyle={styles.cardPD}>
+                        <Card.Title style={styles.card_title}>PEDIDO Nº 43025</Card.Title>
+                        <Card.Divider style={styles.card_line}/>
+                        <Card.FeaturedSubtitle style={{color:"#fff",fontSize:16.25}}>Descrição</Card.FeaturedSubtitle>
+                        <Text style={styles.card_text} numberOfLines={1}>Descrição do pedido 43026, fjodsa bfgjhk ghgh hkgh ghjg hjk</Text>
+                    </Card>
+                </TouchableOpacity>
+            </View>
+            <View style={styles.container2}>
+            </View>
+        </ScrollView>
     </SafeAreaView>
     )
 }
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#E1EAF4',
+        backgroundColor: '#00E0F0',
         paddingTop: "5%",
         alignItems: 'center',
     },
+    scview:{
+        width: '100%'
+    },
     container2: {
-        flex: 1,
-        backgroundColor: '#E1EAF4',
-        justifyContent: "center",
-        alignContent: "center",
-        alignItems: "center",
-        flexDirection: "column"
+        alignItems: 'center',
+        backgroundColor: '#00E0F0',
+    },
+    cards:{
+        width: '100%',
+        flexWrap: 'wrap',
+        alignItems: 'center',
+        alignContent: 'center',
+        flexDirection: 'row',
+        marginBottom: 20
+    },
+    cardsPD:{
+        width: '100%',
+        alignItems: 'center',
+        alignContent: 'center',
+        flexDirection: 'column',
+        marginBottom: 20
+    },
+    card:{
+        borderRadius: 20,
+        borderColor: '#fff',
+        borderWidth: 1,
+        backgroundColor: '#00b0d0'
+    },
+    cardPD:{
+        borderRadius: 20,
+        borderColor: '#fff',
+        borderWidth: 1,
+        backgroundColor: '#4fefff'
+    },
+    card_title:{
+        color: '#fff',
+        fontSize: 17.5
+    },
+    card_line:{
+        borderBottomWidth: 2,
+        borderBottomColor: '#fff',
+        marginTop: -10
+    },
+    card_text:{
+        color: '#fff',
+        fontSize: 15,
+        textAlign: 'justify'
     },
     btn:{
         backgroundColor: '#00C1F9',
