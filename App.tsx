@@ -9,69 +9,54 @@ import HomeScreen from './screen/index';
 import LoginScreen from './screen/login';
 import CadastroScreen from './screen/cadastro';
 import DashboardScreen from './screen/dashboard';
+import PedidosScreen from './screen/pedidos';
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 function DashBoard(){
   return(
     <Drawer.Navigator
-      drawerContent={(props) => <DrawerItem
-          label="Sair"
-          labelStyle={{color:"#fff",fontSize:15}}
-          inactiveBackgroundColor="#00d0f0"
-          onPress={()=>{props.navigation.navigate("Home")}}
-        />}
-      screenOptions={{
-          drawerStyle: {
-            backgroundColor: "#000",
-          }
-        }}
+    screenOptions={{
+      drawerStyle: {backgroundColor:"#000"}
+    }}
+      initialRouteName="Inicio"
     >
       <Drawer.Screen
         name="Inicio"
         component={DashboardScreen}
         options={{
           headerShown:true,
-          headerStyle:{backgroundColor: '#E1EAF4'}
+          headerStyle:{backgroundColor: '#E1EAF4'},
+          drawerLabel: "Inicio",
+          drawerItemStyle: {backgroundColor:"#00c0d0"},
+          drawerLabelStyle: {color:"#fff",fontSize:15},
+          drawerIcon: ((props)=> <Icon type="feather" name="home" size={18} color="#fff"/>)
+        }}
+      />
+      <Drawer.Screen
+        name="Pedidos"
+        component={PedidosScreen}
+        options={{
+          headerShown:true,
+          headerStyle:{backgroundColor: '#E1EAF4'},
+          headerRight: ((props)=> <TouchableOpacity style={{paddingRight:10}}><Icon type="feather" name="edit" size={25} color="#000"/></TouchableOpacity>),
+          drawerLabel: "Pedidos",
+          drawerItemStyle: {backgroundColor:"#00c0d0"},
+          drawerLabelStyle: {color:"#fff",fontSize:15},
+          drawerIcon: ((props)=> <Icon type="feather" name="clipboard" size={18} color="#fff"/>)
+        }}
+      />
+      <Drawer.Screen
+        name="Sair"
+        component={HomeScreen}
+        options={{
+          headerShown:false,
+          drawerLabel: "Sair",
+          drawerItemStyle: {backgroundColor:"#00c0d0"},
+          drawerLabelStyle: {color:"#fff",fontSize:15},
+          drawerIcon: ((props)=> <Icon type="feather" name="log-out" size={18} color="#fff"/>)
         }}
       />
     </Drawer.Navigator>
-  )
-}
-const ProfileScreen = ({navigation}) => {
-  const func = [
-    {nome:'Teste',desc:'Um teste'},
-    {nome:'Douglas',desc:'Eu sou o douglas você não é o douglas'},
-    {nome:'Dantesys',desc:'Desenvolvedor'},
-    {nome:'Pedrin_sigma',desc:'Testador beta'},
-    {nome:'Netilvan',desc:'Maketing'}
-  ]
-  return (
-    <View>
-      {func.map((item,key)=>(
-        <TouchableOpacity
-          style={styles.btn}
-          key={key}
-          onPress={()=>{navigation.navigate('Home',{func:item})}}
-        ><Text style={{fontSize:20}}>{item.nome}</Text>
-        </TouchableOpacity>
-      ))}
-    </View>
-  )
-}
-const RoomScreen = ({navigation}) => {
-  const func = [
-    {num:'01',desc:'Diretoria'},
-    {num:'02',desc:'Deposito'},
-    {num:'03',desc:'Servidor'},
-    {num:'04',desc:'Dormitorio'},
-    {num:'05',desc:'Lanchonete'},
-  ]
-  return (
-    <View>
-      {func.map((item,key)=>(
-        <Text key={key} style={{fontSize:20}}>Sala {item.num} - {item.desc}</Text>
-      ))}
-    </View>
   )
 }
 export default function App() {

@@ -68,7 +68,7 @@ export default function DashboardScreen({navigation}){
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#00E0F0',
+        backgroundColor: '#00c0d0',
         paddingTop: "5%",
         alignItems: 'center',
     },
@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
     },
     container2: {
         alignItems: 'center',
-        backgroundColor: '#00E0F0',
+        backgroundColor: '#00c0d0',
     },
     cards:{
         width: '100%',
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         borderColor: '#fff',
         borderWidth: 1,
-        backgroundColor: '#4fefff'
+        backgroundColor: '#00e0f0'
     },
     card_title:{
         color: '#fff',
