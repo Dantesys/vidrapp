@@ -76,8 +76,6 @@ export default function PedidosScreen({navigation}){
                     </Card>
                 </TouchableOpacity>
             </View>
-            <View style={styles.container2}>
-            </View>
         </ScrollView>
     </SafeAreaView>
     )

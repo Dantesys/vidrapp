@@ -10,9 +10,10 @@ import LoginScreen from './screen/login';
 import CadastroScreen from './screen/cadastro';
 import DashboardScreen from './screen/dashboard';
 import PedidosScreen from './screen/pedidos';
+import MakePedidoScreen from './screen/makepedido';
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
-function DashBoard(){
+function DashBoard({navigation}){
   return(
     <Drawer.Navigator
     screenOptions={{
@@ -29,6 +30,7 @@ function DashBoard(){
           drawerLabel: "Inicio",
           drawerItemStyle: {backgroundColor:"#00c0d0"},
           drawerLabelStyle: {color:"#fff",fontSize:15},
+          drawerType: 'slide',
           drawerIcon: ((props)=> <Icon type="feather" name="home" size={18} color="#fff"/>)
         }}
       />
@@ -38,10 +40,11 @@ function DashBoard(){
         options={{
           headerShown:true,
           headerStyle:{backgroundColor: '#E1EAF4'},
-          headerRight: ((props)=> <TouchableOpacity style={{paddingRight:10}}><Icon type="feather" name="edit" size={25} color="#000"/></TouchableOpacity>),
+          headerRight: ((props)=> <TouchableOpacity onPress={()=>{navigation.navigate('Fazer Pedido')}} style={{paddingRight:10}}><Icon type="feather" name="edit" size={25} color="#000"/></TouchableOpacity>),
           drawerLabel: "Pedidos",
           drawerItemStyle: {backgroundColor:"#00c0d0"},
           drawerLabelStyle: {color:"#fff",fontSize:15},
+          drawerType: 'slide',
           drawerIcon: ((props)=> <Icon type="feather" name="clipboard" size={18} color="#fff"/>)
         }}
       />
@@ -53,7 +56,19 @@ function DashBoard(){
           drawerLabel: "Sair",
           drawerItemStyle: {backgroundColor:"#00c0d0"},
           drawerLabelStyle: {color:"#fff",fontSize:15},
+          drawerType: 'slide',
           drawerIcon: ((props)=> <Icon type="feather" name="log-out" size={18} color="#fff"/>)
+        }}
+      />
+      <Drawer.Screen
+        name="Fazer Pedido"
+        component={MakePedidoScreen}
+        options={{
+          headerShown:true,
+          headerStyle:{backgroundColor: '#E1EAF4'},
+          drawerLabel:()=>null,
+          title: undefined,
+          drawerIcon:()=>null,
         }}
       />
     </Drawer.Navigator>
