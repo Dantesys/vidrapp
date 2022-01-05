@@ -11,6 +11,8 @@ import CadastroScreen from './screen/cadastro';
 import DashboardScreen from './screen/dashboard';
 import PedidosScreen from './screen/pedidos';
 import MakePedidoScreen from './screen/makepedido';
+import EditarScreen from './screen/edita';
+
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 function DashBoard({navigation}){
@@ -46,6 +48,19 @@ function DashBoard({navigation}){
           drawerLabelStyle: {color:"#fff",fontSize:15},
           drawerType: 'slide',
           drawerIcon: ((props)=> <Icon type="feather" name="clipboard" size={18} color="#fff"/>)
+        }}
+      />
+      <Drawer.Screen
+        name="Configuração"
+        component={EditarScreen}
+        options={{
+          headerShown:true,
+          headerStyle:{backgroundColor: '#E1EAF4'},
+          drawerLabel: "Configurações",
+          drawerItemStyle: {backgroundColor:"#00c0d0"},
+          drawerLabelStyle: {color:"#fff",fontSize:15},
+          drawerType: 'slide',
+          drawerIcon: ((props)=> <Icon type="feather" name="settings" size={18} color="#fff"/>)
         }}
       />
       <Drawer.Screen

@@ -1,58 +1,82 @@
 import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacityBase, TouchableOpacity, SafeAreaView, ScrollView, TextInput, Modal, Pressable } from 'react-native';
 import { Card } from 'react-native-elements';
-import * as ImagePicker from 'expo-image-picker';
-export default function MakePedidoScreen({navigation}){
-    const [desc,setDesc] = React.useState('');
+import MaskInput from 'react-native-mask-input';
+export default function EditarScreen({navigation}){
+    const [senha,setSenha] = React.useState('');
+    const [rsenha,setRSenha] = React.useState('');
+    const [nome,setNome] = React.useState('');
+    const [rua,setRua] = React.useState('');
+    const [num,setNum] = React.useState('');
+    const [bairro,setBairro] = React.useState('');
+    const [cep,setCep] = React.useState('');
     const [modalVisible, setModalVisible] = React.useState(false);
-    async function galeria(){
-        try{
-            const r = await ImagePicker.launchImageLibraryAsync({base64:true});
-            if(!r.cancelled){
-                setModalVisible(!modalVisible);
-            }
-        }catch(err){
-            console.log(err)
-        }
-    }
     function pedir(){
-        navigation.navigate('Pedidos');
+        navigation.navigate('Inicio');
     }
     return (
     <SafeAreaView style={styles.container}>
         <ScrollView style={styles.scview}>
             <View style={[styles.container2,{width:'100%'}]}>
-                <Text style={{color:'#fff',fontSize:30}}>Descrição</Text>
-                <TextInput multiline={true} numberOfLines={7} style={styles.input_text} value={desc} onChangeText={setDesc}/>
+                <Text style={{color:'#fff',fontSize:30}}>Senha</Text>
+                <TextInput
+                    style={styles.input_text}
+                    onChangeText={setSenha}
+                    value={senha}
+                    secureTextEntry={true}
+                />
+                <Text style={{color:'#fff',fontSize:30}}>Repetir Senha</Text>
+                <TextInput
+                    style={styles.input_text}
+                    onChangeText={setRSenha}
+                    value={rsenha}
+                    secureTextEntry={true}
+                />
+                <Text style={{color:'#fff',fontSize:30}}>Nome</Text>
+                <TextInput
+                    style={styles.input_text}
+                    onChangeText={setNome}
+                    value={nome}
+                />
             </View>
-            <TouchableOpacity onPress={()=>{setModalVisible(!modalVisible)}} style={{backgroundColor:'#00e0f0',margin:10,borderRadius:10}}>
-                <Text style={styles.btn_text}>PROJETO</Text>
-            </TouchableOpacity>
             <TouchableOpacity onPress={()=>{pedir()}} style={{backgroundColor:'#12de12',margin:10,borderRadius:10}}>
-                <Text style={styles.btn_text}>PEDIR</Text>
+                <Text style={styles.btn_text}>SALVAR</Text>
             </TouchableOpacity>
-            <Modal
-                animationType="slide"
-                visible={modalVisible}
-                transparent={true}
-                onRequestClose={() => {
-                  setModalVisible(!modalVisible);
-                }}
-            >
-                <View style={styles.modal}>
-                    <View style={styles.modalvw}>
-                        <TouchableOpacity style={{backgroundColor:'#00a0b0',width:'95%',margin:10,borderRadius:10}}>
-                            <Text style={styles.btn_text}>Camera</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={()=>{galeria()}} style={{backgroundColor:'#00a0b0',width:'95%',margin:10,borderRadius:10}}>
-                            <Text style={styles.btn_text}>Galeria</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => setModalVisible(!modalVisible)} style={{width:'95%',backgroundColor:'#ff0a0b',margin:10,borderRadius:10}}>
-                            <Text style={styles.btn_text}>Cancelar</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-            </Modal>
+            <View style={[styles.container2,{width:'100%'}]}>
+                <Text style={[{color:'#fff',fontSize:30},{textAlign:"center"}]}>ENDEREÇO</Text>
+                <Text style={{color:'#fff',fontSize:30}}>CEP</Text>
+                <MaskInput
+                    style={styles.input_text}
+                    onChangeText={(masked,unmasked)=>{
+                        setCep(masked);
+                    }}
+                    value={cep}
+                    keyboardType='numeric'
+                    mask={[/\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/]}
+                />
+                <Text style={{color:'#fff',fontSize:30}}>Rua</Text>
+                <TextInput
+                    style={styles.input_text}
+                    onChangeText={setRua}
+                    value={rua}
+                />
+                <Text style={{color:'#fff',fontSize:30}}>Número</Text>
+                <TextInput
+                    style={styles.input_text}
+                    onChangeText={setNum}
+                    value={num}
+                    keyboardType="numeric"
+                />
+                <Text style={{color:'#fff',fontSize:30}}>Bairro</Text>
+                <TextInput
+                    style={styles.input_text}
+                    onChangeText={setBairro}
+                    value={bairro}
+                />
+            </View>
+            <TouchableOpacity onPress={()=>{pedir()}} style={{backgroundColor:'#12de12',margin:10,borderRadius:10}}>
+                <Text style={styles.btn_text}>ALTERAR ENDEREÇO</Text>
+            </TouchableOpacity>
         </ScrollView>
     </SafeAreaView>
     )
