@@ -1,18 +1,40 @@
 import React from 'react';
-import { StyleSheet, View, Text, TouchableOpacityBase, TouchableOpacity, SafeAreaView, ScrollView, TextInput, Modal, Pressable } from 'react-native';
-import { Card } from 'react-native-elements';
+import { StyleSheet, View, Text, Image, TouchableOpacity, SafeAreaView, ScrollView, TextInput, Modal} from 'react-native';
+import { Icon } from 'react-native-elements';
 import * as ImagePicker from 'expo-image-picker';
+import { Camera } from 'expo-camera';
 export default function MakePedidoScreen({navigation}){
+    const [hasPermission, setHasPermission] = React.useState(null);
+    const [type, setType] = React.useState(Camera.Constants.Type.back);
     const [desc,setDesc] = React.useState('');
+    const [proj,setProj] = React.useState(null);
     const [modalVisible, setModalVisible] = React.useState(false);
+    const [camVisible, setCamVisible] = React.useState(false);
+    const [ref,setRef] = React.useState(null);
+    React.useEffect(() => {
+        (async () => {
+          const { status } = await Camera.requestCameraPermissionsAsync();
+          setHasPermission(status === 'granted');
+        })();
+      }, []);
     async function galeria(){
         try{
             const r = await ImagePicker.launchImageLibraryAsync({base64:true});
             if(!r.cancelled){
+                setProj(r.base64);
                 setModalVisible(!modalVisible);
             }
         }catch(err){
             console.log(err)
+        }
+    }
+    async function foto(){
+        try{
+            let r = await ref.takePictureAsync({base64:true});
+            setProj(r.base64);
+            setCamVisible(!camVisible);
+        }catch(err){
+            console.log(err);
         }
     }
     function pedir(){
@@ -25,9 +47,18 @@ export default function MakePedidoScreen({navigation}){
                 <Text style={{color:'#fff',fontSize:30}}>Descrição</Text>
                 <TextInput multiline={true} numberOfLines={7} style={styles.input_text} value={desc} onChangeText={setDesc}/>
             </View>
-            <TouchableOpacity onPress={()=>{setModalVisible(!modalVisible)}} style={{backgroundColor:'#00e0f0',margin:10,borderRadius:10}}>
-                <Text style={styles.btn_text}>PROJETO</Text>
-            </TouchableOpacity>
+            {proj ? (
+                <View style={{paddingTop:10}}>
+                    <Image style={{width:150,height:200,alignSelf:'center'}} source={{uri:`data:image/png;base64,${proj}`}}/>
+                    <TouchableOpacity onPress={()=>{setModalVisible(!modalVisible)}} style={{backgroundColor:'#00e0f0',margin:10,borderRadius:10}}>
+                        <Text style={styles.btn_text}>ALTERAR</Text>
+                    </TouchableOpacity>
+                </View>
+            ):(
+                <TouchableOpacity onPress={()=>{setModalVisible(!modalVisible)}} style={{backgroundColor:'#00e0f0',margin:10,borderRadius:10}}>
+                    <Text style={styles.btn_text}>PROJETO</Text>
+                </TouchableOpacity>
+            )}
             <TouchableOpacity onPress={()=>{pedir()}} style={{backgroundColor:'#12de12',margin:10,borderRadius:10}}>
                 <Text style={styles.btn_text}>PEDIR</Text>
             </TouchableOpacity>
@@ -41,7 +72,7 @@ export default function MakePedidoScreen({navigation}){
             >
                 <View style={styles.modal}>
                     <View style={styles.modalvw}>
-                        <TouchableOpacity style={{backgroundColor:'#00a0b0',width:'95%',margin:10,borderRadius:10}}>
+                        <TouchableOpacity onPress={()=>{setModalVisible(!modalVisible);setCamVisible(!camVisible)}} style={{backgroundColor:'#00a0b0',width:'95%',margin:10,borderRadius:10}}>
                             <Text style={styles.btn_text}>Camera</Text>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={()=>{galeria()}} style={{backgroundColor:'#00a0b0',width:'95%',margin:10,borderRadius:10}}>
@@ -50,6 +81,38 @@ export default function MakePedidoScreen({navigation}){
                         <TouchableOpacity onPress={() => setModalVisible(!modalVisible)} style={{width:'95%',backgroundColor:'#ff0a0b',margin:10,borderRadius:10}}>
                             <Text style={styles.btn_text}>Cancelar</Text>
                         </TouchableOpacity>
+                    </View>
+                </View>
+            </Modal>
+            <Modal
+                animationType="slide"
+                visible={camVisible}
+                transparent={true}
+                onRequestClose={() => {
+                  setCamVisible(!camVisible);
+                }}
+            >
+                <View style={styles.modal2}>
+                    <View style={{flex:1,backgroundColor:'transparent'}}>
+                        <Camera
+                            style={{flex:1}}
+                            ref={(r)=>setRef(r)}
+                            type={type}
+                            autoFocus={true}
+                            focusDepth={1}
+                        >
+                            <TouchableOpacity onPress={() => setCamVisible(!camVisible)} style={{width:'98%',flexDirection:'row',alignContent:'flex-start' ,backgroundColor:'transparent',margin:10}}>
+                                <Icon type="feather" name="chevron-left" size={42} color="#fff"/>
+                            </TouchableOpacity>
+                            <View style={{position:'absolute',bottom:30,flexDirection:'row',alignContent:'center',justifyContent:'center',backgroundColor:'transparent'}}>
+                                <TouchableOpacity onPress={() => {setType(type === Camera.Constants.Type.back? Camera.Constants.Type.front: Camera.Constants.Type.back);}} style={{width:'25%',alignContent:'center',justifyContent:'center',backgroundColor:'transparent'}}>
+                                    <Icon type="feather" name="rotate-ccw" size={42} color="#fff"/>
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={() => foto()} style={{width:'54%',backgroundColor:'transparent'}}>
+                                    <Icon type="feather" name="circle" size={75} color="#fff"/>
+                                </TouchableOpacity>
+                            </View>
+                        </Camera>
                     </View>
                 </View>
             </Modal>
@@ -72,6 +135,9 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
         alignItems: 'baseline',
         backgroundColor: 'transparent'
+    },
+    modal2: {
+        flex: 1
     },
     modalvw: {
         backgroundColor: "#00f0ff",

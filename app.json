@@ -14,8 +14,8 @@
       [
         "expo-image-picker",
         {
-          "photosPermission": "Allow $(PRODUCT_NAME) to access your photos.",
-          "savePhotosPermission": "Allow $(PRODUCT_NAME) to save photos.",
+          "photosPermission": "Pemitir $(PRODUCT_NAME) acessar sua galeria.",
+          "savePhotosPermission": "Pemitir $(PRODUCT_NAME) salvar imagens no seu celular",
           "isAccessMediaLocationEnabled": true
         }
       ]
@@ -29,7 +29,8 @@
     "ios": {
       "supportsTablet": true,
       "infoPlist": {
-        "NSPhotoLibraryUsageDescription": "Permitir o VIDRAPP acessar a galeria"
+        "NSPhotoLibraryUsageDescription": "Permitir o VIDRAPP acessar a galeria",
+        "NSCameraUsageDescription": "Permitir o VIDRAPP acessar a camera"
       }
     },
     "android": {
