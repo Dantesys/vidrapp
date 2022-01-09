@@ -1,8 +1,14 @@
 import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacityBase, TouchableOpacity, SafeAreaView, TextInput } from 'react-native';
+import { AuthService } from '../api/auth';
 export default function LoginScreen({navigation}){
     const [email,setEmail] = React.useState('');
     const [senha,setSenha] = React.useState('');
+    async function login() {
+        let user = await AuthService.login(email,senha);
+        console.log(user);
+        navigation.navigate('Dashboard',{usuario:user});
+    }
     return (
     <SafeAreaView style={styles.container}>
         <View style={styles.container2}>
@@ -25,7 +31,7 @@ export default function LoginScreen({navigation}){
                 />
                 <TouchableOpacity style={styles.btn}
                     onPress={()=>{
-                        navigation.navigate('Dashboard');
+                        login()
                     }}
                 >
                     <Text style={styles.btn_text}>LOGIN</Text>

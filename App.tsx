@@ -12,10 +12,11 @@ import DashboardScreen from './screen/dashboard';
 import PedidosScreen from './screen/pedidos';
 import MakePedidoScreen from './screen/makepedido';
 import EditarScreen from './screen/edita';
+import DetalheScreen from './screen/detalhe';
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
-function DashBoard({navigation}){
+function DashBoard({route,navigation}){
   return(
     <Drawer.Navigator
     screenOptions={{
@@ -26,6 +27,7 @@ function DashBoard({navigation}){
       <Drawer.Screen
         name="Inicio"
         component={DashboardScreen}
+        initialParams={route.params}
         options={{
           headerShown:true,
           headerStyle:{backgroundColor: '#E1EAF4'},
@@ -39,6 +41,7 @@ function DashBoard({navigation}){
       <Drawer.Screen
         name="Pedidos"
         component={PedidosScreen}
+        initialParams={route.params}
         options={{
           headerShown:true,
           headerStyle:{backgroundColor: '#E1EAF4'},
@@ -53,6 +56,7 @@ function DashBoard({navigation}){
       <Drawer.Screen
         name="Configuração"
         component={EditarScreen}
+        initialParams={route.params}
         options={{
           headerShown:true,
           headerStyle:{backgroundColor: '#E1EAF4'},
@@ -78,6 +82,19 @@ function DashBoard({navigation}){
       <Drawer.Screen
         name="Fazer Pedido"
         component={MakePedidoScreen}
+        initialParams={route.params}
+        options={{
+          headerShown:true,
+          headerStyle:{backgroundColor: '#E1EAF4'},
+          drawerLabel:()=>null,
+          title: undefined,
+          drawerIcon:()=>null,
+        }}
+      />
+      <Drawer.Screen
+        name="Detalhe"
+        component={DetalheScreen}
+        initialParams={route.params}
         options={{
           headerShown:true,
           headerStyle:{backgroundColor: '#E1EAF4'},

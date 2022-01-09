@@ -1,40 +1,27 @@
 import React from 'react';
-import { StyleSheet, View, Text, TouchableOpacityBase, TouchableOpacity, SafeAreaView, ScrollView, TextInput, FlatList } from 'react-native';
+import { StyleSheet, View, Text, Image, TouchableOpacity, SafeAreaView, ScrollView, TextInput, FlatList } from 'react-native';
 import { Card } from 'react-native-elements';
 import { PedidoService } from '../api/pedido';
-export default function PedidosScreen({route,navigation}){
+export default function DetalheScreen({route,navigation}){
     const usuario = route.params.usuario;
+    const pedido = route.params.pedido;
     const [pedidos,setPedidos] = React.useState([]);
-    const [busca,setBusca] = React.useState('');
     React.useEffect(() => {
         loadData();
     },[route.params.usuario]);
     async function loadData(){
-        let r = await PedidoService.list();
-        setPedidos(r);
+        console.log(pedido);
     }
     return (
     <SafeAreaView style={styles.container}>
         <View style={styles.scview}>
             <View style={[styles.container2,{width:'100%',borderBottomWidth:2,borderBottomColor:'#fff',paddingBottom:10}]}>
-                <Text style={{color:'#fff',fontSize:30}}>PEDIDOS</Text>
-                <TextInput style={styles.input_text} value={busca} onChangeText={setBusca}/>
+                <Text style={{color:'#fff',fontSize:30}}>PEDIDO Nº{pedido.numero}</Text>
             </View>
             <View style={styles.cardsPD}>
-                <FlatList
-                    data={pedidos}
-                    renderItem={({item}) => 
-                    <TouchableOpacity onPress={()=>{navigation.navigate('Detalhe',{pedido:item})}} key={item.key} style={{minWidth: '100%', maxWidth: '100%'}}>
-                        <Card containerStyle={styles.cardPD}>
-                            <Card.Title style={styles.card_title}>PEDIDO Nº {item.numero}</Card.Title>
-                            <Card.Divider style={styles.card_line}/>
-                            <Card.FeaturedSubtitle style={{color:"#fff",fontSize:16.25}}>Descrição</Card.FeaturedSubtitle>
-                            <Text style={styles.card_text} numberOfLines={1}>{item.descricao}</Text>
-                        </Card>
-                    </TouchableOpacity>
-                    }
-                />
+                <Text style={styles.card_text}>{pedido.descricao}</Text>
             </View>
+            <Image style={{width:300,height:400,alignSelf:'center'}} source={{uri:`data:image/png;base64,${pedido.projeto.projeto}`}}/>
         </View>
     </SafeAreaView>
     )
@@ -91,7 +78,7 @@ const styles = StyleSheet.create({
     },
     card_text:{
         color: '#fff',
-        fontSize: 15,
+        fontSize: 20,
         textAlign: 'justify'
     },
     btn:{

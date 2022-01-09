@@ -1,7 +1,8 @@
 import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacityBase, TouchableOpacity, SafeAreaView, ScrollView } from 'react-native';
 import { Card } from 'react-native-elements';
-export default function DashboardScreen({navigation}){
+export default function DashboardScreen({route,navigation}){
+    const usuario = route.params.usuario;
     return (
     <SafeAreaView style={styles.container}>
         <ScrollView style={styles.scview}>

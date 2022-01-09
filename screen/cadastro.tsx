@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacityBase, TouchableOpacity, SafeAreaView, TextInput, ScrollView } from 'react-native';
 import MaskInput from 'react-native-mask-input';
+import { AuthService } from '../api/auth';
 export default function CadastroScreen({navigation}){
     const [email,setEmail] = React.useState('');
     const [senha,setSenha] = React.useState('');
@@ -9,6 +10,16 @@ export default function CadastroScreen({navigation}){
     const [num,setNum] = React.useState('');
     const [bairro,setBairro] = React.useState('');
     const [cep,setCep] = React.useState('');
+    async function cadastro(){
+        let endereco = {
+            rua: rua,
+            num: num,
+            bairro: bairro,
+            cep: cep
+        }
+        let r = await AuthService.cadastro(nome,email,senha,endereco);
+        navigation.navigate('Home');
+    }
     return (
     <SafeAreaView style={styles.container}>
         <ScrollView style={styles.container2}>
@@ -63,7 +74,7 @@ export default function CadastroScreen({navigation}){
                     onChangeText={setBairro}
                     value={bairro}
                 />
-                <TouchableOpacity style={styles.btn}>
+                <TouchableOpacity onPress={()=>{cadastro()}} style={styles.btn}>
                     <Text style={styles.btn_text}>CADASTRAR</Text>
                 </TouchableOpacity>
             </View>

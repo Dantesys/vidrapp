@@ -2,7 +2,9 @@ import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacityBase, TouchableOpacity, SafeAreaView, ScrollView, TextInput, Modal, Pressable } from 'react-native';
 import { Card } from 'react-native-elements';
 import MaskInput from 'react-native-mask-input';
-export default function EditarScreen({navigation}){
+import { AuthService } from '../api/auth';
+export default function EditarScreen({route,navigation}){
+    const usuario = route.params.usuario;
     const [senha,setSenha] = React.useState('');
     const [rsenha,setRSenha] = React.useState('');
     const [nome,setNome] = React.useState('');
@@ -11,8 +13,23 @@ export default function EditarScreen({navigation}){
     const [bairro,setBairro] = React.useState('');
     const [cep,setCep] = React.useState('');
     const [modalVisible, setModalVisible] = React.useState(false);
-    function pedir(){
-        navigation.navigate('Inicio');
+    React.useEffect(() => {
+        loadData();
+    },[route.params.usuario]);
+    function loadData(){
+        setNome(usuario.nome);
+        setRua(usuario.endereco.rua);
+        setNum(usuario.endereco.num);
+        setBairro(usuario.endereco.bairro);
+        setCep(usuario.endereco.cep);
+    }
+    async function pedir(){
+        if(senha==rsenha && senha!=''){
+            let r = await AuthService.changeData(nome,senha,usuario.endereco);
+            navigation.navigate('Dashboard',{usuario:r});
+        }else{
+            alert("As senha não são iguais e não vazias")
+        }
     }
     return (
     <SafeAreaView style={styles.container}>
@@ -39,9 +56,6 @@ export default function EditarScreen({navigation}){
                     value={nome}
                 />
             </View>
-            <TouchableOpacity onPress={()=>{pedir()}} style={{backgroundColor:'#12de12',margin:10,borderRadius:10}}>
-                <Text style={styles.btn_text}>SALVAR</Text>
-            </TouchableOpacity>
             <View style={[styles.container2,{width:'100%'}]}>
                 <Text style={[{color:'#fff',fontSize:30},{textAlign:"center"}]}>ENDEREÇO</Text>
                 <Text style={{color:'#fff',fontSize:30}}>CEP</Text>
@@ -75,7 +89,7 @@ export default function EditarScreen({navigation}){
                 />
             </View>
             <TouchableOpacity onPress={()=>{pedir()}} style={{backgroundColor:'#12de12',margin:10,borderRadius:10}}>
-                <Text style={styles.btn_text}>ALTERAR ENDEREÇO</Text>
+                <Text style={styles.btn_text}>SALVAR</Text>
             </TouchableOpacity>
         </ScrollView>
     </SafeAreaView>

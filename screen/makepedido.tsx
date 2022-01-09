@@ -3,11 +3,12 @@ import { StyleSheet, View, Text, Image, TouchableOpacity, SafeAreaView, ScrollVi
 import { Icon } from 'react-native-elements';
 import * as ImagePicker from 'expo-image-picker';
 import { Camera } from 'expo-camera';
+import { PedidoService } from '../api/pedido';
 export default function MakePedidoScreen({navigation}){
     const [hasPermission, setHasPermission] = React.useState(null);
     const [type, setType] = React.useState(Camera.Constants.Type.back);
     const [desc,setDesc] = React.useState('');
-    const [proj,setProj] = React.useState(null);
+    const [proj,setProj] = React.useState('');
     const [modalVisible, setModalVisible] = React.useState(false);
     const [camVisible, setCamVisible] = React.useState(false);
     const [ref,setRef] = React.useState(null);
@@ -17,9 +18,15 @@ export default function MakePedidoScreen({navigation}){
           setHasPermission(status === 'granted');
         })();
       }, []);
+    async function pedir(){
+        let r = await PedidoService.pedir(desc,proj);
+        console.log(r);
+        alert('Pedido feito com sucesso');
+        navigation.navigate('Pedidos');
+    }
     async function galeria(){
         try{
-            const r = await ImagePicker.launchImageLibraryAsync({base64:true});
+            const r = await ImagePicker.launchImageLibraryAsync({quality:0.25,base64:true});
             if(!r.cancelled){
                 setProj(r.base64);
                 setModalVisible(!modalVisible);
@@ -30,15 +37,12 @@ export default function MakePedidoScreen({navigation}){
     }
     async function foto(){
         try{
-            let r = await ref.takePictureAsync({base64:true});
+            let r = await ref.takePictureAsync({quality:0.25,base64:true});
             setProj(r.base64);
             setCamVisible(!camVisible);
         }catch(err){
             console.log(err);
         }
-    }
-    function pedir(){
-        navigation.navigate('Pedidos');
     }
     return (
     <SafeAreaView style={styles.container}>
