@@ -6,62 +6,6 @@ export default function DashboardScreen({route,navigation}){
     return (
     <SafeAreaView style={styles.container}>
         <ScrollView style={styles.scview}>
-            <View style={[styles.container2,{width:'100%',borderBottomWidth:2,borderBottomColor:'#fff'}]}>
-                <Text style={{color:'#fff',fontSize:30}}>AVISOS</Text>
-            </View>
-            <View style={styles.cards}>
-                <TouchableOpacity style={{minWidth: '50%', maxWidth: '50%'}}>
-                    <Card containerStyle={styles.card}>
-                        <Card.Title style={styles.card_title}>AVISO</Card.Title>
-                        <Card.Divider style={styles.card_line}/>
-                        <Text style={styles.card_text}>Isso é um aviso</Text>
-                    </Card>
-                </TouchableOpacity>
-                <TouchableOpacity style={{minWidth: '50%', maxWidth: '50%'}}>
-                    <Card containerStyle={styles.card}>
-                        <Card.Title style={styles.card_title}>AVISO</Card.Title>
-                        <Card.Divider style={styles.card_line}/>
-                        <Text style={styles.card_text}>Isso é um aviso</Text>
-                    </Card>
-                </TouchableOpacity>
-                <TouchableOpacity style={{minWidth: '50%', maxWidth: '50%'}}>
-                    <Card containerStyle={styles.card}>
-                        <Card.Title style={styles.card_title}>AVISO</Card.Title>
-                        <Card.Divider style={styles.card_line}/>
-                        <Text style={styles.card_text}>Isso é um aviso</Text>
-                    </Card>
-                </TouchableOpacity>
-                <TouchableOpacity style={{minWidth: '50%', maxWidth: '50%'}}>
-                    <Card containerStyle={styles.card}>
-                        <Card.Title style={styles.card_title}>AVISO</Card.Title>
-                        <Card.Divider style={styles.card_line}/>
-                        <Text style={styles.card_text}>Isso é um aviso</Text>
-                    </Card>
-                </TouchableOpacity>
-            </View>
-            <View style={[styles.container2,{width:'100%',borderBottomWidth:2,borderBottomColor:'#fff'}]}>
-                <Text style={{color:'#fff',fontSize:30}}>PEDIDOS A CAMINHO</Text>
-            </View>
-            <View style={styles.cardsPD}>
-                <TouchableOpacity style={{minWidth: '100%', maxWidth: '100%'}}>
-                    <Card containerStyle={styles.cardPD}>
-                        <Card.Title style={styles.card_title}>PEDIDO Nº 43025</Card.Title>
-                        <Card.Divider style={styles.card_line}/>
-                        <Card.FeaturedSubtitle style={{color:"#fff",fontSize:16.25}}>Descrição</Card.FeaturedSubtitle>
-                        <Text style={styles.card_text} numberOfLines={1}>Descrição do pedido 43025, fjodsa bfgjhk ghgh hkgh ghjg hjk</Text>
-                    </Card>
-                </TouchableOpacity>
-                <TouchableOpacity style={{minWidth: '100%', maxWidth: '100%'}}>
-                    <Card containerStyle={styles.cardPD}>
-                        <Card.Title style={styles.card_title}>PEDIDO Nº 43025</Card.Title>
-                        <Card.Divider style={styles.card_line}/>
-                        <Card.FeaturedSubtitle style={{color:"#fff",fontSize:16.25}}>Descrição</Card.FeaturedSubtitle>
-                        <Text style={styles.card_text} numberOfLines={1}>Descrição do pedido 43026, fjodsa bfgjhk ghgh hkgh ghjg hjk</Text>
-                    </Card>
-                </TouchableOpacity>
-            </View>
-            <View style={styles.container2}>
-            </View>
         </ScrollView>
     </SafeAreaView>
     )

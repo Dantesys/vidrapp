@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text, TouchableOpacityBase, TouchableOpacity, SafeAreaView, Platform, StatusBar } from 'react-native';
+import { StyleSheet, View, Text, Image, TouchableOpacity, SafeAreaView, Platform, StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -13,6 +13,8 @@ import PedidosScreen from './screen/pedidos';
 import MakePedidoScreen from './screen/makepedido';
 import EditarScreen from './screen/edita';
 import DetalheScreen from './screen/detalhe';
+//LOGO
+import logo from './assets/icon.png';
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -22,22 +24,8 @@ function DashBoard({route,navigation}){
     screenOptions={{
       drawerStyle: {backgroundColor:"#000"}
     }}
-      initialRouteName="Inicio"
+      initialRouteName="Pedidos"
     >
-      <Drawer.Screen
-        name="Inicio"
-        component={DashboardScreen}
-        initialParams={route.params}
-        options={{
-          headerShown:true,
-          headerStyle:{backgroundColor: '#E1EAF4'},
-          drawerLabel: "Inicio",
-          drawerItemStyle: {backgroundColor:"#00c0d0"},
-          drawerLabelStyle: {color:"#fff",fontSize:15},
-          drawerType: 'slide',
-          drawerIcon: ((props)=> <Icon type="feather" name="home" size={18} color="#fff"/>)
-        }}
-      />
       <Drawer.Screen
         name="Pedidos"
         component={PedidosScreen}
@@ -106,6 +94,14 @@ function DashBoard({route,navigation}){
     </Drawer.Navigator>
   )
 }
+function LogoTitle() {
+  return (
+    <Image
+      style={{ width: 50, height: 50 }}
+      source={logo}
+    />
+  );
+}
 export default function App() {
   return (
     <SafeAreaView style={{flex:1,paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0}}>
@@ -121,7 +117,7 @@ export default function App() {
             component={LoginScreen}
             options={{
               headerShown:true,
-              title:"VIDRAPP LOGO",
+              headerTitle: (props) => <LogoTitle {...props} />,
               headerTitleAlign:'center',
               headerTitleStyle:{fontSize:25},
               headerShadowVisible: false,
@@ -133,7 +129,7 @@ export default function App() {
             component={CadastroScreen}
             options={{
               headerShown:true,
-              title:"VIDRAPP LOGO",
+              headerTitle: (props) => <LogoTitle {...props} />,
               headerTitleAlign:'center',
               headerTitleStyle:{fontSize:25},
               headerShadowVisible: false,

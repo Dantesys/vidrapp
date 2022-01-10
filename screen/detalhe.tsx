@@ -19,6 +19,30 @@ export default function DetalheScreen({route,navigation}){
                 <Text style={{color:'#fff',fontSize:30}}>PEDIDO Nº{pedido.numero}</Text>
             </View>
             <View style={styles.cardsPD}>
+                {pedido.estado==0 && (
+                    <Text style={styles.card_text}>Enviado para fabrica</Text>
+                )}
+                {pedido.estado==1 && (
+                    <Text style={styles.card_text}>Entrou em analise - {pedido.dti_analise}</Text>
+                )}
+                {pedido.estado==2 && (
+                    <Text style={styles.card_text}>Analisado - {pedido.dtf_analise}</Text>
+                )}
+                {pedido.estado==3 && (
+                    <Text style={styles.card_text}>Entrou em produção - {pedido.dti_producao}</Text>
+                )}
+                {pedido.estado==4 && (
+                    <Text style={styles.card_text}>Projeto produzido - {pedido.dtf_producao}</Text>
+                )}
+                {pedido.estado==5 && (
+                    <Text style={styles.card_text}>Entrou para escala de entrega - {pedido.dti_escala}</Text>
+                )}
+                {pedido.estado==6 && (
+                    <Text style={styles.card_text}>Enviado - {pedido.dtf_escala}</Text>
+                )}
+                {pedido.estado==9 && (
+                    <Text style={styles.card_text}>Erro com o seu projeto</Text>
+                )}
                 <Text style={styles.card_text}>{pedido.descricao}</Text>
             </View>
             <Image style={{width:300,height:400,alignSelf:'center'}} source={{uri:`data:image/png;base64,${pedido.projeto.projeto}`}}/>

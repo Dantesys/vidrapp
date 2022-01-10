@@ -5,36 +5,98 @@ import { PedidoService } from '../api/pedido';
 export default function PedidosScreen({route,navigation}){
     const usuario = route.params.usuario;
     const [pedidos,setPedidos] = React.useState([]);
+    const [listbusca,setListbusca] = React.useState([]);
     const [busca,setBusca] = React.useState('');
+    const [loading,setLoading] = React.useState(true);
     React.useEffect(() => {
         loadData();
     },[route.params.usuario]);
     async function loadData(){
+        setLoading(true);
         let r = await PedidoService.list();
         setPedidos(r);
+        setListbusca(r);
+        setLoading(false);
+    }
+    async function buscar(){
+        setLoading(true);
+        let info = [
+            "Enviado para fabrica",
+            "Entrou em analise",
+            "Analisado",
+            "Entrou em produção",
+            "Projeto produzido",
+            "Entrou para escala de entrega",
+            "Enviado",
+            "Erro com o seu projeto"
+        ]
+        let r = [];
+        let fe = pedidos;
+        if(busca!=''){
+            fe.forEach((item,index)=>{
+                if(item.numero.toString().includes(busca)){
+                    r.push(item);
+                }else if(item.descricao.includes(busca)){
+                    r.push(item);
+                }else{
+                    info.map((item2)=>{
+                        if(item2.includes(busca)){
+                            r.push(item);
+                        }
+                    })
+                }
+            });
+        }else{
+            setListbusca(pedidos);
+        }
+        setListbusca(r);
+        setLoading(false);
     }
     return (
     <SafeAreaView style={styles.container}>
         <View style={styles.scview}>
             <View style={[styles.container2,{width:'100%',borderBottomWidth:2,borderBottomColor:'#fff',paddingBottom:10}]}>
                 <Text style={{color:'#fff',fontSize:30}}>PEDIDOS</Text>
-                <TextInput style={styles.input_text} value={busca} onChangeText={setBusca}/>
+                <TextInput onEndEditing={()=>buscar()} style={styles.input_text} value={busca} onChangeText={setBusca}/>
             </View>
-            <View style={styles.cardsPD}>
-                <FlatList
-                    data={pedidos}
-                    renderItem={({item}) => 
+            {!loading && listbusca && (<FlatList
+                data={listbusca}
+                scrollEnabled={true}
+                renderItem={({item}) => 
                     <TouchableOpacity onPress={()=>{navigation.navigate('Detalhe',{pedido:item})}} key={item.key} style={{minWidth: '100%', maxWidth: '100%'}}>
                         <Card containerStyle={styles.cardPD}>
                             <Card.Title style={styles.card_title}>PEDIDO Nº {item.numero}</Card.Title>
                             <Card.Divider style={styles.card_line}/>
+                            {item.estado==0 && (
+                                <Text style={styles.card_text}>Enviado para fabrica</Text>
+                            )}
+                            {item.estado==1 && (
+                                <Text style={styles.card_text}>Entrou em analise - {item.dti_analise}</Text>
+                            )}
+                            {item.estado==2 && (
+                                <Text style={styles.card_text}>Analisado - {item.dtf_analise}</Text>
+                            )}
+                            {item.estado==3 && (
+                                <Text style={styles.card_text}>Entrou em produção - {item.dti_producao}</Text>
+                            )}
+                            {item.estado==4 && (
+                                <Text style={styles.card_text}>Projeto produzido - {item.dtf_producao}</Text>
+                            )}
+                            {item.estado==5 && (
+                                <Text style={styles.card_text}>Entrou para escala de entrega - {item.dti_escala}</Text>
+                            )}
+                            {item.estado==6 && (
+                                <Text style={styles.card_text}>Enviado - {item.dtf_escala}</Text>
+                            )}
+                            {item.estado==9 && (
+                                <Text style={styles.card_text}>Erro com o seu projeto</Text>
+                            )}
                             <Card.FeaturedSubtitle style={{color:"#fff",fontSize:16.25}}>Descrição</Card.FeaturedSubtitle>
                             <Text style={styles.card_text} numberOfLines={1}>{item.descricao}</Text>
                         </Card>
                     </TouchableOpacity>
-                    }
-                />
-            </View>
+                }
+            />)}
         </View>
     </SafeAreaView>
     )

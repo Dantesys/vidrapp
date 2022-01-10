@@ -1,10 +1,11 @@
 import React from 'react';
-import { StyleSheet, View, Text, TouchableOpacityBase, TouchableOpacity, SafeAreaView } from 'react-native';
+import { StyleSheet, View, Text, Image, TouchableOpacity, SafeAreaView } from 'react-native';
+import logo from '../assets/icon.png'
 export default function HomeScreen({navigation}){
     return (
     <SafeAreaView style={styles.container}>
         <View style={styles.container2}>
-            <Text style={{fontSize:50}}>VIDRAPP LOGO</Text>
+            <Image style={{ width: 300, height: 300 }} source={logo}/>
             <TouchableOpacity style={styles.btn} onPress={()=>{navigation.navigate('Login')}}>
                 <Text style={styles.btn_text}>LOGIN</Text>
             </TouchableOpacity>
