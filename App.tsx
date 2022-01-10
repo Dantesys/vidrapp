@@ -8,7 +8,7 @@ import { Icon } from 'react-native-elements'
 import HomeScreen from './screen/index';
 import LoginScreen from './screen/login';
 import CadastroScreen from './screen/cadastro';
-import DashboardScreen from './screen/dashboard';
+//import DashboardScreen from './screen/dashboard';
 import PedidosScreen from './screen/pedidos';
 import MakePedidoScreen from './screen/makepedido';
 import EditarScreen from './screen/edita';

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { getToken } from './storage';
-var host = "http://1d82-170-79-48-77.ngrok.io";
+var host = "http://9972-177-105-190-228.ngrok.io";
 var api = axios.create({
     baseURL: host + '/'
 });

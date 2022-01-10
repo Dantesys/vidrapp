@@ -47,7 +47,7 @@ export default function PedidosScreen({route,navigation}){
                 }
             });
         }else{
-            setListbusca(pedidos);
+            r=pedidos;
         }
         setListbusca(r);
         setLoading(false);
